@@ -1,0 +1,222 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}About Us{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" rel="stylesheet" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous"/>
+{% endblock %}
+{% block navbar %}
+<div class="navbar-inverse navbar-expand-lg" id="nav" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle"
+             data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">AIS</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/aboutus">About Us</a> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+  <div>
+    <p id="header"
+       style="
+    font-size: xxx-large;
+    font-weight: bold;
+    text-align: center;">
+        Java Artists
+    </p>
+  </div>
+  <div>
+      <div class="py-5">
+    <div class="container">
+      <div class="row hidden-md-up">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-block" style="padding: 10px 10px 10px 10px">
+              <h4 class="card-title" style="text-align: center">Kerod Fresenbet Gebremedhin</h4>
+                <div class="div-img">
+              <img src="../static/images/user.jpg" width="30%" height="30%" alt="">
+                    </div>
+              <p class="card-text p-y-1" style="text-align: center">ID: ATR/2660/10</p>
+             <div style="background-color: #1d4b8e" class="div-img"> <a
+                      class="btn-floating btn-lg text-light m-1"
+                      href="https://github.com/Kerod-Fresenbet-Gebremedhin2660"
+                      role="button"
+                      data-mdb-ripple-color="dark"
+                      target="_blank"
+                      id="dev1"
+              ><i class="fab fa-github"></i
+              >
+               Github
+              </a>
+             </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-block" style="padding: 10px 10px 10px 10px">
+              <h4 class="card-title" style="text-align: center">Amanuel Tefera Adefris</h4>
+                <div class="div-img">
+              <img src="../static/images/user.jpg" width="30%" height="30%" alt="">
+                    </div>
+              <p class="card-text p-y-1" style="text-align: center">ID: ATR/1769/10</p>
+              <div style="background-color: #1d4b8e" class="div-img">
+              <a
+                      class="btn-floating btn-lg text-light m-1"
+                      href="https://github.com/amanueltefera1769"
+                      role="button"
+                      data-mdb-ripple-color="dark"
+                      target="_blank"
+                      id="dev2"
+              ><i class="fab fa-github"></i
+              >
+                Github
+              </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-block" style="padding: 10px 10px 10px 10px">
+              <h4 class="card-title" style="text-align: center">Henok Gelaneh</h4>
+                <div class="div-img">
+              <img src="../static/images/user.jpg" width="30%" height="30%" alt="">
+                    </div>
+              <p class="card-text p-y-1" style="text-align: center">ID: ATR/7217/10</p>
+              <div style="background-color: #1d4b8e" class="div-img">
+              <a
+                      class="btn-floating btn-lg text-light m-1"
+                      href="https://github.com/henokgelaneh7217"
+                      role="button"
+                      data-mdb-ripple-color="dark"
+                      target="_blank"
+                      id="dev3"
+              ><i class="fab fa-github"></i
+              >
+                Github
+              </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><br>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-block" style="padding: 10px 10px 10px 10px">
+              <h4 class="card-title" style="text-align: center">Abiy Wondimu</h4>
+                <div class="div-img">
+                    <img src="../static/images/user.jpg" width="30%" height="30%" alt="">
+                </div>
+                              <p class="card-text p-y-1" style="text-align: center">ID: ATR/5758/10</p>
+
+              <div style="background-color: #1d4b8e" class="div-img">
+              <a
+                      class="btn-floating btn-lg text-light m-1"
+                      href="https://github.com/abiywondimu5758"
+                      role="button"
+                      data-mdb-ripple-color="dark"
+                      target="_blank"
+                      id="dev4"
+              ><i class="fab fa-github"></i
+              >
+                Github
+              </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card hidden" id="hidden">
+            <div class="card-block" style="padding: 10px 10px 10px 10px">
+              <h4 class="card-title" style="text-align: center">Hidden</h4>
+                <div class="div-img">
+              <img src="../static/images/user.jpg" width="30%" height="30%" alt="">
+                    </div>
+              <p class="card-text p-y-1">Hidden</p>
+              <a
+                      class="btn-floating btn-lg text-light m-1"
+                      href="https://github.com/eyobgoitom1155"
+                      role="button"
+                      data-mdb-ripple-color="dark"
+                      target="_blank"
+                      id="dev6"
+              ><i class="fab fa-github"></i
+              >
+                Github
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-block" style="padding: 10px 10px 10px 10px">
+              <h4 class="card-title" style="text-align: center">Eyob Goitom</h4>
+                <div class="div-img">
+              <img src="../static/images/user.jpg" width="30%" height="30%" alt="">
+                    </div>
+              <p class="card-text p-y-1" style="text-align: center">ID: ATR/1155/10</p>
+              <section class="mb-4">
+                <div style="background-color: #1d4b8e" class="div-img">
+
+              <a
+                      class="btn-floating btn-lg text-light m-1"
+                      href="https://github.com/eyobgoitom1155"
+                      role="button"
+                      data-mdb-ripple-color="dark"
+                      target="_blank"
+                      id="dev5"
+              ><i class="fab fa-github"></i
+              >
+                Github
+              </a>
+                </div>
+
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+{% endblock %}
+{% block styles %}
+    {{super()}}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css.css') }}">
+    <style>
+    .div-img{
+        display: block;
+        text-align: center;
+    }
+    img {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+    }
+    a {
+        color: white;
+    }
+    a:hover {
+        color: black;
+        text-decoration: none;
+    }
+    </style>
+{% endblock %}

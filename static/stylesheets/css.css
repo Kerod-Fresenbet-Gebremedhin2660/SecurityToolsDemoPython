@@ -1,0 +1,12 @@
+ #header {
+    font-size: xxx-large;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  #hidden{
+    visibility: hidden;
+  }
+  a {
+    text-align: center;
+  }

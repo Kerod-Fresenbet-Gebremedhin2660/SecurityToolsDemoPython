@@ -1,0 +1,78 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}AIS-PROJ-1{% endblock %}
+
+{% block navbar %}
+<div class="navbar-inverse" id="nav" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle"
+             data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">AIS</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/aboutus">About Us</a> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+    <br>
+    <div id="form">
+        <form method="post" action="" class="" autocomplete="off">
+                 {{ form.hidden_tag() }}
+            <div>{{ form.ip.label(class="ip-label") }}{{ form.ip }}</div>
+            <div>{{ form.submit(class_="btn btn-primary") }}</div>
+        </form>
+    </div>
+
+    <table class="table hidden" id="result">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Vendor</th>
+      <th scope="col">OS Family</th>
+      <th scope="col">OS Generation</th>
+      <th scope="col">Accuracy of Detection</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        {% if osinfo %}
+            {% for i, j in osinfo %}
+                <th>
+                    {{ j }}
+                </th>
+            {% endfor %}
+        {% else %}
+
+        {% endif %}
+    </tr>
+  </tbody>
+</table>
+{% endblock %}
+{% block styles %}
+    {{ super() }}
+    <style>
+    #form{
+        display: block;
+        text-align: center;
+    }
+    form {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+    }
+    </style>
+{% endblock %}
