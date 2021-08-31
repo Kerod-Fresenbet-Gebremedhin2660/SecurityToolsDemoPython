@@ -1,6 +1,7 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% block title %}NOT FOUND ERROR{% endblock %}
+{% block title %}AIS-PROJ-1{% endblock %}
+
 
 {% block navbar %}
 <div class="navbar-inverse" id="nav" role="navigation">
@@ -27,26 +28,29 @@
 {% endblock %}
 
 {% block content %}
-    <div style="font-weight: bold; font-size: xx-large" class="father">
-        <div class="child">
-        NOT FOUND 404
-
+    <br>
+    <div id="form">
+        <form method="post" action="" class="" autocomplete="off">
+                 {{ form.hidden_tag() }}
+            <div>{{ form.ip.label(class="ip-label") }}{{ form.ip }}</div>
+            <div>{{ form.submit(class_="btn btn-primary") }}</div>
+        </form>
+    </div>
+    {% if osname %}
+    <div id="form">
+        <div id="child">
+            {{ osname }}
         </div>
     </div>
+    {% else %}
+    {% endif %}
 {% endblock %}
 {% block styles %}
     {{ super() }}
     <style>
-    .father {
-    line-height: 300px;
-    text-align: center;
-}
-.child {
-    display: inline-block;
-    vertical-align: middle;
-    line-height: initial;
-    text-align: left;
-}
-
+         #form{
+        display: block;
+        text-align: center;
+    }
     </style>
 {% endblock %}

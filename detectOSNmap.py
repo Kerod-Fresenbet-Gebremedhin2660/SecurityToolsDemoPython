@@ -10,6 +10,8 @@ def DetectOS(ipaddress: str) -> Dict:
 
     result = scanner.scan(ipaddress, arguments="-O")['scan'][ipaddress]['osmatch'][0]
 
+    print(result)
+
     if result is None:
         os_info['detected'] = False
         return os_info
@@ -30,6 +32,3 @@ def DetectOS(ipaddress: str) -> Dict:
     os_info['detected'] = True
 
     return os_info
-
-
-print(DetectOS("192.168.0.181"))
