@@ -1,6 +1,7 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% block title %}NMAP{% endblock %}
+{% block title %}AIS-PROJ-1{% endblock %}
+
 
 {% block navbar %}
 <div class="navbar-inverse" id="nav" role="navigation">
@@ -35,28 +36,39 @@
         <form method="post" action="" class="" autocomplete="off">
                  {{ form.hidden_tag() }}
             <div>{{ form.ip.label(class="ip-label") }}{{ form.ip }}</div>
+            <div>{{ form.scanType.label }}{{ form.scanType }}</div>
             <div>{{ form.submit(class_="btn btn-primary") }}</div>
         </form>
     </div>
 
-    <table class="table" id="result">
+  <table class="table" id="result">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Vendor</th>
-      <th scope="col">OS Family</th>
-      <th scope="col">OS Generation</th>
-      <th scope="col">Accuracy of Detection</th>
+      <th scope="col">Port Name</th>
+      <th scope="col">Port Status</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-        {% if osinfo %}
-            {% for i, j in osinfo %}
+        {% if result %}
+            {% for i, j in result.items() %}
+                <tr>
                 <th>
-                    {{ j }}
+                    {{ i }}
                 </th>
+                {% if j == true %}
+                <th id="green">
+                    Open
+                </th>
+                {% elif j == false %}
+                <th id="red">
+                    Closed
+                </th>
+                {% else %}
+                <th>
+
+                </th>
+                {% endif %}
+                </tr>
             {% endfor %}
         {% else %}
 
@@ -64,6 +76,7 @@
     </tr>
   </tbody>
 </table>
+
 {% endblock %}
 {% block styles %}
     {{ super() }}
@@ -78,5 +91,12 @@
         margin-right: auto;
         text-align: left;
     }
+    #green{
+        color: green;
+    }
+    #red{
+        color: red;
+    }
     </style>
 {% endblock %}
+

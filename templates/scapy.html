@@ -1,6 +1,6 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% block title %}AIS-PROJ-1{% endblock %}
+{% block title %}SCAPY{% endblock %}
 
 
 {% block navbar %}
@@ -20,6 +20,9 @@
             <ul class="nav navbar-nav">
                 <li><a href="/">NMAP</a></li>
                 <li><a href="/scapy">Scapy</a></li>
+                <li><a href="/portscan">Port Scan</a></li>
+                <li><a href="/spoofer">Spoofer Tool Scapy</a></li>
+                <li><a href="/networkscan">Network Scan</a></li>
                 <li><a href="/aboutus">About Us</a> </li>
             </ul>
         </div>
@@ -36,21 +39,88 @@
             <div>{{ form.submit(class_="btn btn-primary") }}</div>
         </form>
     </div>
+
     {% if osname %}
-    <div id="form">
-        <div id="child">
-            {{ osname }}
+
+    {% if osname == "windows" %}
+        <div id="center">
+        <div class="card" style="width: 18rem;">
+                <img class="card-img-top"
+                     src="../static/images/windows.jpeg"
+                     alt="Windows"
+                    width="50%"
+                    height="50%"
+                >
+            <div class="card-body">
+            <h5 class="card-title">{{ osname }}</h5>
+            <p class="card-text">Microsoft's closed source and most popular series of operating systems</p>
+            <a
+                    href="https://en.wikipedia.org/wiki/Microsoft_Windows"
+                    target="_blank"
+                    class="btn btn-primary">
+                Read More</a>
         </div>
-    </div>
+        </div>
+        </div>
+
+    {% elif osname == "linux" %}
+        <div class="card" style="width: 18rem;">
+                <img class="card-img-top"
+                     src="../static/images/linux.png"
+                     alt="Windows"
+                    width="50%"
+                    height="50%"
+                >
+            <div class="card-body">
+            <h5 class="card-title">{{ osname }}</h5>
+            <p class="card-text">Family of Operating Systems that are based on the FOSS linux Kernel</p>
+            <a
+                    href="https://www.linux.org/"
+                    target="_blank"
+                    class="btn btn-primary">
+                Read More</a>
+            </div>
+        </div>
+    {% else %}
+    <div class="card" style="width: 18rem;">
+                <img class="card-img-top"
+                     src="../static/images/question.jpg"
+                     alt="Not Ascertained"
+                    width="50%"
+                    height="50%"
+                >
+            <div class="card-body">
+            <h5 class="card-title">{{ osname }}</h5>
+            <p class="card-text">The Operating System Could not be determined</p>
+            <a
+                    href="/scapy"
+                    target="_blank"
+                    class="btn btn-primary">
+                Read More</a>
+            </div>
+        </div>
+    {% endif %}
     {% else %}
     {% endif %}
 {% endblock %}
+
 {% block styles %}
     {{ super() }}
     <style>
-         #form{
+    #form{
         display: block;
         text-align: center;
+    }
+    form {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+    }
+    #center{
+        width:100%;
+        display: flex;
+        justify-content: center;
     }
     </style>
 {% endblock %}

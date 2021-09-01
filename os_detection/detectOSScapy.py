@@ -10,7 +10,7 @@ def DetectOS(ipaddress: str) ->str:
         return None
     elif IP in response:
         if response.getlayer(IP).ttl <= 64:
-            return "Linux"
+            return "linux"
         elif response.getlayer(IP).ttl >64:
-            return "Windows"
+            return "windows"
 

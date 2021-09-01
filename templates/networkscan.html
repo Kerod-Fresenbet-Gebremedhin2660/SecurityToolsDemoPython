@@ -1,6 +1,6 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% block title %}NOT FOUND ERROR{% endblock %}
+{% block title %}PortScan{% endblock %}
 
 {% block navbar %}
 <div class="navbar-inverse" id="nav" role="navigation">
@@ -20,36 +20,11 @@
                 <li><a href="/">NMAP</a></li>
                 <li><a href="/scapy">Scapy</a></li>
                 <li><a href="/portscan">Port Scan</a></li>
-                <li><a href="/networkscan">Network Scan</a></li>
                 <li><a href="/spoofer">Spoofer Tool Scapy</a></li>
+                <li><a href="/networkscan">Network Scan</a></li>
                 <li><a href="/aboutus">About Us</a> </li>
             </ul>
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block content %}
-    <div style="font-weight: bold; font-size: xx-large" class="father">
-        <div class="child">
-        NOT FOUND 404
-
-        </div>
-    </div>
-{% endblock %}
-{% block styles %}
-    {{ super() }}
-    <style>
-    .father {
-    line-height: 300px;
-    text-align: center;
-}
-.child {
-    display: inline-block;
-    vertical-align: middle;
-    line-height: initial;
-    text-align: left;
-}
-
-    </style>
 {% endblock %}
