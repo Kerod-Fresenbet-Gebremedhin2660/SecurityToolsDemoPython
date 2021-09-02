@@ -1,15 +1,38 @@
+from dominate.tags import img
 from flask import Flask, render_template, flash, make_response
 from flask_bootstrap import Bootstrap
+from flask_nav import Nav, register_renderer
+from flask_nav.elements import *
+from navbar import JustDivRenderer
+
+from config import Config
+from forms import OSForm, OSForm2, OSForm3
+from ip_spoofer.ipSpoofer import get_spoofed_address, get_ip_address, ping_with_spoofed_address
 from os_detection.detectOSNmap import DetectOS
 from os_detection.detectOSScapy import DetectOS as DOS2
-from config import Config
-from forms import OSForm, OSForm2
 from port_scan.portScanner import known_ports_scan, all_ports_scan
-
 
 app = Flask(__name__)
 app.config.from_object(Config)
 Bootstrap(app)
+
+nav = Nav()
+
+logo = img(src="../static/favicon/favicon-32x32.png")
+
+navbar = Navbar(
+    logo,
+    View('OS f 1', 'index'),
+    View('OS f 2', 'scapy'),
+    View('Port Scan', 'portscan'),
+    View('Spoofer', 'spoofer'),
+    View('Network Scan', 'netscan'),
+    View('Email Harvester', 'harvestemails'),
+    View('About Us', 'aboutus'),
+)
+register_renderer(app, 'just_div', JustDivRenderer)
+nav.register_element('top', navbar)
+nav.init_app(app)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -38,7 +61,7 @@ def scapy():
 
 
 @app.route('/portscan', methods=['GET', 'POST'])
-def portScan():
+def portscan():
     form = OSForm2()
     result = None
     if form.validate_on_submit():
@@ -54,12 +77,25 @@ def portScan():
 
 @app.route('/spoofer')
 def spoofer():
-    return render_template('spoofer.html')
+    form = OSForm3()
+    result = None
+    ip_real = get_ip_address()
+    spoofed_ip_address = get_spoofed_address()
+    if form.validate_on_submit():
+        flash('Processing Your Request')
+        ip = form.ip.data
+        result = ping_with_spoofed_address(str(ip))
+    return render_template('spoofer.html', ipr=ip_real, sip=spoofed_ip_address, form=form, result=result)
 
 
 @app.route('/networkscan')
 def netscan():
     return render_template('networkscan.html')
+
+
+@app.route('/emailharvester')
+def harvestemails():
+    return render_template("emailharvester.html")
 
 
 @app.route('/aboutus')
@@ -69,7 +105,13 @@ def aboutus():
 
 @app.errorhandler(404)
 def not_found(error):
-    resp = make_response(render_template('notfound.html'), 404)
+    resp = make_response(render_template('404.html'), 404)
+    return resp
+
+
+@app.errorhandler(500)
+def server_error(error):
+    resp = make_response(render_template('404.html'), 404)
     return resp
 
 

@@ -1,34 +1,7 @@
-{% extends "bootstrap/base.html" %}
+{% extends "navigation.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% block title %}AIS-PROJ-1{% endblock %}
 
-
-{% block navbar %}
-<div class="navbar-inverse" id="nav" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle"
-             data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">AIS</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="/">NMAP</a></li>
-                <li><a href="/scapy">Scapy</a></li>
-                <li><a href="/portscan">Port Scan</a></li>
-                <li><a href="/spoofer">Spoofer Tool Scapy</a></li>
-                <li><a href="/networkscan">Network Scan</a></li>
-                <li><a href="/aboutus">About Us</a> </li>
-            </ul>
-        </div>
-    </div>
-</div>
-{% endblock %}
 
 {% block content %}
     <br>
@@ -73,9 +46,11 @@
         {% else %}
 
         {% endif %}
-    </tr>
   </tbody>
 </table>
+    <div id="form">
+     <div class="loader"></div>
+    </div>
 
 {% endblock %}
 {% block styles %}
@@ -96,6 +71,23 @@
     }
     #red{
         color: red;
+    }
+    .loader {
+      border: 10px solid #f3f3f3; /* Light grey */
+      border-top: 10px solid #3498db; /* Blue */
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 2s linear infinite;
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
     </style>
 {% endblock %}

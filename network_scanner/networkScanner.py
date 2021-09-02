@@ -1,5 +1,6 @@
 import socket, re
 from scapy.all import *
+from scapy.layers.inet import IP, ICMP
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect(('8.8.8.8', 80))
@@ -13,7 +14,8 @@ create_ip = re.search('^[\d]{1,3}.[\d]{1,3}.[\d]{1,3}.', ip)
 def is_up(ip):
     icmp = IP(dst=ip) / ICMP()
     resp = sr1(icmp, timeout=10)
-    if resp == None:
+
+    if resp is None:
         return False
     else:
         return True
@@ -33,4 +35,3 @@ try:
                 print(test_ip + " Is Up")
 except KeyboardInterrupt:
     print('interrupted!')
-

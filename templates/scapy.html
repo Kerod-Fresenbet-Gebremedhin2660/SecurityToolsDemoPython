@@ -1,34 +1,7 @@
-{% extends "bootstrap/base.html" %}
+{% extends "navigation.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% block title %}SCAPY{% endblock %}
 
-
-{% block navbar %}
-<div class="navbar-inverse" id="nav" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle"
-             data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">AIS</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="/">NMAP</a></li>
-                <li><a href="/scapy">Scapy</a></li>
-                <li><a href="/portscan">Port Scan</a></li>
-                <li><a href="/spoofer">Spoofer Tool Scapy</a></li>
-                <li><a href="/networkscan">Network Scan</a></li>
-                <li><a href="/aboutus">About Us</a> </li>
-            </ul>
-        </div>
-    </div>
-</div>
-{% endblock %}
 
 {% block content %}
     <br>

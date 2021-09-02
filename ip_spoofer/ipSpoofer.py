@@ -1,6 +1,8 @@
-import netifaces
 from scapy.all import *
-from scapy.layers.inet import IP, TCP
+from scapy.layers.inet import IP, TCP, ICMP
+import ipaddress, netifaces, random
+
+from scapy.layers.l2 import Ether
 
 
 def get_ip_address_alt() -> str:
@@ -25,12 +27,34 @@ def get_net_mask():
     return None
 
 
+def get_broadcast():
+    interfaces = netifaces.interfaces()
+    for i in interfaces:
+        if i.__contains__('w'):
+            return netifaces.ifaddresses(i)[2][0]['broadcast']
+    return None
+
+
 def check_ip_address():
     return get_ip_address() == get_ip_address_alt()
 
 
-def spoof_address(src_ipaddr, dest_ipaddr):
-    spoofed_packet = IP(src_ipaddr, dest_ipaddr) / TCP
+def get_spoofed_address():
+    ip = ipaddress.ip_address(get_broadcast())
+    return str(ip + random.randint(2, 254))
 
 
+def ping_with_spoofed_address(dest_ipaddr):
+    spoofed_addr = get_spoofed_address()
 
+    ethernet = Ether()
+    network = IP(src=spoofed_addr, dst=dest_ipaddr)
+    transport = ICMP()
+
+    pkt = ethernet / network / transport
+
+    # return srloop(pkt, iface=netifaces.interfaces()[-1])
+    # return send(network / ICMP() / "Hello World")
+
+
+print(ping_with_spoofed_address("192.168.0.142"))

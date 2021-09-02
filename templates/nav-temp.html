@@ -1,0 +1,29 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}NMAP{% endblock %}
+{% block head %}
+    {{ super() }}
+        <link rel="icon" type="image/ico" sizes="32x32" href="../static/favicon/favicon-32x32.png">
+{% endblock %}
+{% block navbar %}
+<ul>
+    <a href="/">
+        <li class="text-lg px-8 py-3 {% if selected == "Site Details" %}border-l-4 bg-gray-200{% endif %}">Details</li>
+    </a>
+    <a href="/spoofer">
+        <li class="text-lg px-8 py-3 {% if selected == "Events" %}border-l-4 bg-gray-200{% endif %}">Events</li>
+    </a>
+    <a href="/scapy">
+        <li class="text-lg px-8 py-3 {% if selected == "Environment" %}border-l-4 bg-gray-200{% endif %}">Environment Variables</li>
+    </a>
+    <a href="/portscan">
+        <li class="text-lg px-8 py-3 {% if selected == "NGINX Config" %}border-l-4 bg-gray-200{% endif %}">NGINX Config</li>
+    </a>
+    <a href="/emailharvester">
+        <li class="text-lg px-8 py-3 {% if selected == "SSL" %}border-l-4 bg-gray-200{% endif %}">SSL Config</li>
+    </a>
+    <a href="/aboutus">
+        <li class="text-lg px-8 py-3 {% if selected == "Workers" %}border-l-4 bg-gray-200{% endif %}">Workers</li>
+    </a>
+</ul>
+{% endblock %}

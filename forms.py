@@ -10,5 +10,10 @@ class OSForm(FlaskForm):
 
 class OSForm2(FlaskForm):
     ip = StringField("IP Address : ", validators=[DataRequired(), IPAddress()])
-    scanType = SelectField(label="Type of Scan", choices=[(1, 'Known Ports'), (2, 'All Ports')])
+    scanType = SelectField(label="Type of Scan : ", choices=[(1, 'Known Ports'), (2, 'All Ports')])
     submit = SubmitField('Scan Ports')
+
+
+class OSForm3(FlaskForm):
+    ip = StringField("Destination IP Address :   ", validators=[DataRequired(), IPAddress()])
+    submit = SubmitField('Send Spoofed Packet')
