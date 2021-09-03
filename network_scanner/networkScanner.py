@@ -7,7 +7,6 @@ s.connect(('8.8.8.8', 80))
 ip = s.getsockname()[0]
 
 end = re.search('^[\d]{1,3}.[\d]{1,3}.[\d]{1,3}.[\d]{1,3}', ip)
-
 create_ip = re.search('^[\d]{1,3}.[\d]{1,3}.[\d]{1,3}.', ip)
 
 
