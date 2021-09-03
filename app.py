@@ -1,38 +1,18 @@
-from dominate.tags import img
 from flask import Flask, render_template, flash, make_response
 from flask_bootstrap import Bootstrap
-from flask_nav import Nav, register_renderer
-from flask_nav.elements import *
-from navbar import JustDivRenderer
-
 from config import Config
-from forms import OSForm, OSForm2, OSForm3
+from forms import OSForm, OSForm2, OSForm3, OSForm4, OSForm5
 from ip_spoofer.ipSpoofer import get_spoofed_address, get_ip_address, ping_with_spoofed_address
 from os_detection.detectOSNmap import DetectOS
 from os_detection.detectOSScapy import DetectOS as DOS2
+from email_harvester.emailHarvester import harvest_emails
 from port_scan.portScanner import known_ports_scan, all_ports_scan
+from network_scanner.networkScanner import net_scan
+
 
 app = Flask(__name__)
 app.config.from_object(Config)
 Bootstrap(app)
-
-nav = Nav()
-
-logo = img(src="../static/favicon/favicon-32x32.png")
-
-navbar = Navbar(
-    logo,
-    View('OS f 1', 'index'),
-    View('OS f 2', 'scapy'),
-    View('Port Scan', 'portscan'),
-    View('Spoofer', 'spoofer'),
-    View('Network Scan', 'netscan'),
-    View('Email Harvester', 'harvestemails'),
-    View('About Us', 'aboutus'),
-)
-register_renderer(app, 'just_div', JustDivRenderer)
-nav.register_element('top', navbar)
-nav.init_app(app)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -75,7 +55,7 @@ def portscan():
     return render_template("portscan.html", form=form, result=result)
 
 
-@app.route('/spoofer')
+@app.route('/spoofer', methods=['GET', 'POST'])
 def spoofer():
     form = OSForm3()
     result = None
@@ -88,14 +68,27 @@ def spoofer():
     return render_template('spoofer.html', ipr=ip_real, sip=spoofed_ip_address, form=form, result=result)
 
 
-@app.route('/networkscan')
+@app.route('/networkscan', methods=['GET', 'POST'])
 def netscan():
-    return render_template('networkscan.html')
+    form = OSForm5()
+    result = None
+    if form.validate_on_submit():
+        result = net_scan()
+    return render_template('networkscan.html', form=form, result=result)
 
 
-@app.route('/emailharvester')
+@app.route('/emailharvester', methods=['GET', 'POST'])
 def harvestemails():
-    return render_template("emailharvester.html")
+    form = OSForm4()
+    result = None
+    if form.validate_on_submit():
+        flash('Processing Your Request')
+        url = form.url.data
+        result = harvest_emails(url)
+        if len(result) == 0:
+            result = None
+            flash('Connection Error Most Likely, No Results could be fetched')
+    return render_template("emailharvester.html", form=form, result=result)
 
 
 @app.route('/aboutus')

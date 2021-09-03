@@ -1,23 +1,21 @@
-{% extends "bootstrap/base.html" %}
+{% extends "nav-temp.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% block title %}NMAP{% endblock %}
 
-{% block navbar %}
-    {{ nav.top.render (renderer='just_div') }}
-{% endblock %}
-
 {% block content %}
     <br>
+    <div style="margin-right: 30%">
     <div id="form">
         <form method="post" action="" class="" autocomplete="off">
                  {{ form.hidden_tag() }}
             <div>{{ form.ip.label(class="ip-label") }}{{ form.ip }}</div>
+            <br>
             <div>{{ form.submit(class_="btn btn-primary") }}</div>
         </form>
     </div>
 
     <table class="table" id="result">
-  <thead>
+    <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
@@ -26,8 +24,8 @@
       <th scope="col">OS Generation</th>
       <th scope="col">Accuracy of Detection</th>
     </tr>
-  </thead>
-  <tbody>
+    </thead>
+    <tbody>
     <tr>
         {% if osinfo %}
             {% for i, j in osinfo %}
@@ -39,8 +37,9 @@
 
         {% endif %}
     </tr>
-  </tbody>
-</table>
+    </tbody>
+    </table>
+</div>
 {% endblock %}
 {% block styles %}
     {{ super() }}

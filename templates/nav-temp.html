@@ -6,24 +6,25 @@
         <link rel="icon" type="image/ico" sizes="32x32" href="../static/favicon/favicon-32x32.png">
 {% endblock %}
 {% block navbar %}
-<ul>
-    <a href="/">
-        <li class="text-lg px-8 py-3 {% if selected == "Site Details" %}border-l-4 bg-gray-200{% endif %}">Details</li>
-    </a>
-    <a href="/spoofer">
-        <li class="text-lg px-8 py-3 {% if selected == "Events" %}border-l-4 bg-gray-200{% endif %}">Events</li>
-    </a>
-    <a href="/scapy">
-        <li class="text-lg px-8 py-3 {% if selected == "Environment" %}border-l-4 bg-gray-200{% endif %}">Environment Variables</li>
-    </a>
-    <a href="/portscan">
-        <li class="text-lg px-8 py-3 {% if selected == "NGINX Config" %}border-l-4 bg-gray-200{% endif %}">NGINX Config</li>
-    </a>
-    <a href="/emailharvester">
-        <li class="text-lg px-8 py-3 {% if selected == "SSL" %}border-l-4 bg-gray-200{% endif %}">SSL Config</li>
-    </a>
-    <a href="/aboutus">
-        <li class="text-lg px-8 py-3 {% if selected == "Workers" %}border-l-4 bg-gray-200{% endif %}">Workers</li>
-    </a>
-</ul>
+        <div id="wrapper" class="toggled">
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">
+                <li><a href="/">OS FingerPrinter TCP/IP</a></li>
+                <li><a href="/scapy">OS FingerPrinter ICMP</a></li>
+                <li><a href="/portscan">Port Scan</a></li>
+                <li><a href="/spoofer">Spoofer</a></li>
+                <li><a href="/networkscan">Network Scan</a></li>
+                <li><a href="/emailharvester">Harvest Emails</a></li>
+                <li><a href="/aboutus">About Us</a> </li>
+                </ul>
+            </div>
+        </div>
+{% endblock %}
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('.static', filename='nav.css') }}">
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('.static', filename='nav.js') }}"></script>
 {% endblock %}

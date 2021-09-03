@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField
-from wtforms.validators import DataRequired, IPAddress, NumberRange
+from wtforms.validators import DataRequired, IPAddress, URL
 
 
 class OSForm(FlaskForm):
@@ -17,3 +17,12 @@ class OSForm2(FlaskForm):
 class OSForm3(FlaskForm):
     ip = StringField("Destination IP Address :   ", validators=[DataRequired(), IPAddress()])
     submit = SubmitField('Send Spoofed Packet')
+
+
+class OSForm4(FlaskForm):
+    url = StringField("URL : ", validators=[DataRequired(), URL()])
+    submit = SubmitField('Harvest Emails')
+
+
+class OSForm5(FlaskForm):
+    submit = SubmitField('Scan Network')

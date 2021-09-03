@@ -1,7 +1,6 @@
 from scapy.all import *
 from scapy.layers.inet import IP, TCP, ICMP
 import ipaddress, netifaces, random
-
 from scapy.layers.l2 import Ether
 
 
@@ -50,11 +49,8 @@ def ping_with_spoofed_address(dest_ipaddr):
     ethernet = Ether()
     network = IP(src=spoofed_addr, dst=dest_ipaddr)
     transport = ICMP()
-
     pkt = ethernet / network / transport
 
-    # return srloop(pkt, iface=netifaces.interfaces()[-1])
-    # return send(network / ICMP() / "Hello World")
+    return srloop(pkt, iface=netifaces.interfaces()[-1])
 
 
-print(ping_with_spoofed_address("192.168.0.142"))

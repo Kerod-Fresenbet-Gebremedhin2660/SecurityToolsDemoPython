@@ -1,10 +1,11 @@
-{% extends "navigation.html" %}
+{% extends "nav-temp.html" %}
 
 {% import "bootstrap/wtf.html" as wtf %}
 {% block title %}NMAP{% endblock %}
 
 {% block content %}
     <br>
+    <div style="margin-right: 30%">
     <div id="form">
     <table class="table table-sm">
   <tbody>
@@ -43,10 +44,12 @@
         <form method="post" action="" class="" autocomplete="off">
                  {{ form.hidden_tag() }}
             <div>{{ form.ip.label(class="ip-label") }}{{ form.ip }}</div>
+            <br>
             <div>{{ form.submit(class_="btn btn-primary") }}</div>
         </form>
     </div>
     <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
 {% endblock %}
 
 {% block styles %}
