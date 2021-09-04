@@ -1,45 +1,42 @@
 {% extends "nav-temp.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% block title %}OS FP TCP{% endblock %}
-
+{% block title %}Link Harvester{% endblock %}
 {% block content %}
     <br>
     <div style="margin-right: 30%">
     <div id="form">
         <form method="post" action="" class="" autocomplete="off">
                  {{ form.hidden_tag() }}
-            <div>{{ form.ip.label(class="ip-label") }}{{ form.ip }}</div>
+            <div>{{ form.url.label(class="ip-label") }}{{ form.url }}</div>
             <br>
             <div>{{ form.submit(class_="btn btn-primary") }}</div>
         </form>
     </div>
-
-    <table class="table" id="result">
+        <table class="table" id="result">
     <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Vendor</th>
-      <th scope="col">OS Family</th>
-      <th scope="col">OS Generation</th>
-      <th scope="col">Accuracy of Detection</th>
+      <th scope="col">Links</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-        {% if osinfo %}
-            {% for i, j in osinfo %}
+        {% if result %}
+            {% for i in result %}
+            <tr>
                 <th>
-                    {{ j }}
+                    <a href="{{ i }}">{{ i }}</a>
                 </th>
+            </tr>
             {% endfor %}
-        {% else %}
-
-        {% endif %}
-    </tr>
     </tbody>
     </table>
-</div>
+    {% else %}
+    <div id="form">
+        <div>
+            No Links Could be harvested.
+        </div>
+    </div>
+    {% endif %}
+    </div>
 {% endblock %}
 {% block styles %}
     {{ super() }}

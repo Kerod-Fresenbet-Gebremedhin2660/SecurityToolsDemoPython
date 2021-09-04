@@ -5,7 +5,7 @@ from forms import OSForm, OSForm2, OSForm3, OSForm4, OSForm5
 from ip_spoofer.ipSpoofer import get_spoofed_address, get_ip_address, ping_with_spoofed_address
 from os_detection.detectOSNmap import DetectOS
 from os_detection.detectOSScapy import DetectOS as DOS2
-from email_harvester.emailHarvester import harvest_emails
+from email_harvester.emailHarvester import harvest_emails, refiner_links
 from port_scan.portScanner import known_ports_scan, all_ports_scan
 from network_scanner.networkScanner import net_scan
 
@@ -89,6 +89,17 @@ def harvestemails():
             result = None
             flash('Connection Error Most Likely, No Results could be fetched')
     return render_template("emailharvester.html", form=form, result=result)
+
+
+@app.route('/linkharvester', methods=['GET', 'POST'])
+def harvestlinks():
+    form = OSForm4()
+    result = None
+    if form.validate_on_submit():
+        flash('Processing Your Request')
+        url = form.url.data
+        result = refiner_links(url)
+    return render_template("linkharvester.html", form=form, result=result)
 
 
 @app.route('/aboutus')

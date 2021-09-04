@@ -21,7 +21,7 @@ class OSForm3(FlaskForm):
 
 class OSForm4(FlaskForm):
     url = StringField("URL : ", validators=[DataRequired(), URL()])
-    submit = SubmitField('Harvest Emails')
+    submit = SubmitField('Harvest')
 
 
 class OSForm5(FlaskForm):

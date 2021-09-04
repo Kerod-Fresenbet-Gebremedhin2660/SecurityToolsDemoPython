@@ -71,6 +71,3 @@ def refiner_links(url):
         else:
             links.append(j)
     return links
-
-
-
