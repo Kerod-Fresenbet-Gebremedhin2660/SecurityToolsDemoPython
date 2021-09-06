@@ -14,66 +14,44 @@
             <div>{{ form.submit(class_="btn btn-primary") }}</div>
         </form>
     </div>
+        <br>
+        <br>
 
     {% if osname %}
 
     {% if osname == "windows" %}
-        <div id="center">
-        <div class="card" style="width: 18rem;">
-                <img class="card-img-top"
-                     src="../static/images/windows.jpeg"
-                     alt="Windows"
-                    width="50%"
-                    height="50%"
-                >
-            <div class="card-body">
-            <h5 class="card-title">{{ osname }}</h5>
-            <p class="card-text">Microsoft's closed source and most popular series of operating systems</p>
-            <a
-                    href="https://en.wikipedia.org/wiki/Microsoft_Windows"
-                    target="_blank"
-                    class="btn btn-primary">
-                Read More</a>
+       <div class="image-center">
         </div>
-        </div>
-        </div>
+        <div class="card border-dark mb-3 text-center" style="max-width: 18rem; border: 2px solid red; border-radius: 5px; padding: 2px">
+                    <img src="../static/images/windows.jpeg" style="width: 160px" alt="Could not Identify">
+
+          <div class="card-header"><strong>Operating System: <span style="color: red">{{ osname }}</span></strong></div>
+          <a href="https://microsoft.com" class="btn btn-primary">ReadMore</a>
+          <div class="card-body">
+          </div>
+
 
     {% elif osname == "linux" %}
-        <div class="card" style="width: 18rem;">
-                <img class="card-img-top"
-                     src="../static/images/linux.png"
-                     alt="Windows"
-                    width="50%"
-                    height="50%"
-                >
-            <div class="card-body">
-            <h5 class="card-title">{{ osname }}</h5>
-            <p class="card-text">Family of Operating Systems that are based on the FOSS linux Kernel</p>
-            <a
-                    href="https://www.linux.org/"
-                    target="_blank"
-                    class="btn btn-primary">
-                Read More</a>
-            </div>
+         <div class="image-center">
         </div>
+        <div class="card border-dark mb-3 text-center" style="max-width: 18rem; border: 2px solid red; border-radius: 5px; padding: 2px">
+                    <img src="../static/images/linux.png" style="width: 160px" alt="Could not Identify">
+
+          <div class="card-header"><strong>Operating System: <span style="color: red">{{ osname }}</span></strong></div>
+          <a href="https://www.linux.org/" class="btn btn-primary">ReadMore</a>
+          <div class="card-body">
+          </div>
     {% else %}
-    <div class="card" style="width: 18rem;">
-                <img class="card-img-top"
-                     src="../static/images/question.jpg"
-                     alt="Not Ascertained"
-                    width="50%"
-                    height="50%"
-                >
-            <div class="card-body">
-            <h5 class="card-title">{{ osname }}</h5>
-            <p class="card-text">The Operating System Could not be determined</p>
-            <a
-                    href="/scapy"
-                    target="_blank"
-                    class="btn btn-primary">
-                Read More</a>
-            </div>
+        <div class="image-center">
         </div>
+        <div class="card border-dark mb-3 text-center" style="max-width: 18rem; border: 2px solid red; border-radius: 5px; padding: 2px">
+                    <img src="../static/images/question.jpg" style="width: 160px" alt="Could not Identify">
+
+          <div class="card-header"><strong>Operating System: <span style="color: red">{{ osname }}</span></strong></div>
+          <a href="/icmp" class="btn btn-primary">ReadMore</a>
+          <div class="card-body">
+          </div>
+
     {% endif %}
     {% else %}
     {% endif %}
@@ -83,6 +61,11 @@
 {% block styles %}
     {{ super() }}
     <style>
+    .image-center{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
     #form{
         display: block;
         text-align: center;
@@ -93,10 +76,9 @@
         margin-right: auto;
         text-align: left;
     }
-    #center{
-        width:100%;
-        display: flex;
-        justify-content: center;
+    .card {
+        float: none;
+        margin: 0 auto 10px;
     }
     </style>
 {% endblock %}

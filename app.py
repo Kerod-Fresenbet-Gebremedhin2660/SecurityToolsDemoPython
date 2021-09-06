@@ -7,10 +7,13 @@ from os_detection.detectOSNmap import DetectOS
 from os_detection.detectOSScapy import DetectOS as DOS2
 from email_harvester.emailHarvester import harvest_emails, refiner_links
 from port_scan.portScanner import known_ports_scan, all_ports_scan
+from port_scan.portScannerASync import known_ports_scan as kps
 from network_scanner.networkScanner import net_scan
+from turbo_flask import Turbo
 
 
 app = Flask(__name__)
+turbo = Turbo(app)
 app.config.from_object(Config)
 Bootstrap(app)
 
@@ -26,7 +29,7 @@ def index():
     return render_template("index.html", form=form, osinfo=osinfo)
 
 
-@app.route('/scapy', methods=['GET', 'POST'])
+@app.route('/icmp', methods=['GET', 'POST'])
 def scapy():
     form = OSForm()
     osname = None
@@ -49,9 +52,19 @@ def portscan():
         ip = form.ip.data
         scan_type = int(form.scanType.data)
         if scan_type == 1:
-            result = known_ports_scan(str(ip))
+            if ip is not None:
+                result = known_ports_scan(str(ip))
+            else:
+                result = known_ports_scan()
+                print(result)
         elif scan_type == 2:
-            result = all_ports_scan(str(ip))
+            if ip is not None:
+                result = all_ports_scan(str(ip))
+            else:
+                result = all_ports_scan()
+        if turbo.can_stream():
+            turbo.append(render_template('portscan.html', form=form, result=result))
+
     return render_template("portscan.html", form=form, result=result)
 
 

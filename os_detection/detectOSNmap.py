@@ -8,9 +8,10 @@ scanner = nmap.PortScanner()
 def DetectOS(ipaddress: str) -> Dict:
     os_info = dict()
 
-    result = scanner.scan(ipaddress, arguments="-O")['scan'][ipaddress]['osmatch'][0]
-
-    print(result)
+    try:
+        result = scanner.scan(ipaddress, arguments="-O")['scan'][ipaddress]['osmatch'][0]
+    except KeyError as e:
+        result = None
 
     if result is None:
         os_info['detected'] = False

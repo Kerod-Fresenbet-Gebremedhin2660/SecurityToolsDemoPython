@@ -9,7 +9,7 @@ class OSForm(FlaskForm):
 
 
 class OSForm2(FlaskForm):
-    ip = StringField("IP Address : ", validators=[DataRequired(), IPAddress()])
+    ip = StringField("IP Address : ", validators=[IPAddress()])
     scanType = SelectField(label="Type of Scan : ", choices=[(1, 'Known Ports'), (2, 'All Ports')])
     submit = SubmitField('Scan Ports')
 

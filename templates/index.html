@@ -23,18 +23,21 @@
       <th scope="col">OS Family</th>
       <th scope="col">OS Generation</th>
       <th scope="col">Accuracy of Detection</th>
+      <th scope="col">CPE</th>
+      <th scope="col">Bool</th>
     </tr>
     </thead>
     <tbody>
     <tr>
         {% if osinfo %}
-            {% for i, j in osinfo %}
+            {% for i, j in osinfo.items() %}
                 <th>
                     {{ j }}
                 </th>
+            {% else %}
+                <th>Could not Identify OS</th>
             {% endfor %}
         {% else %}
-
         {% endif %}
     </tr>
     </tbody>
