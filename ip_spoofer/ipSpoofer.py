@@ -1,8 +1,6 @@
 from scapy.all import *
 from scapy.layers.inet import IP, TCP, ICMP
 import ipaddress, netifaces, random
-from scapy.layers.l2 import Ether
-
 
 def get_ip_address_alt() -> str:
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

@@ -1,19 +1,25 @@
-from flask import Flask, render_template, flash, make_response
+from flask import Flask, render_template, flash, make_response, request, redirect
 from flask_bootstrap import Bootstrap
 from config import Config
-from forms import OSForm, OSForm2, OSForm3, OSForm4, OSForm5
+from forms import OSForm, OSForm2, OSForm3, OSForm4, OSForm5, OSForm6
 from ip_spoofer.ipSpoofer import get_spoofed_address, get_ip_address, ping_with_spoofed_address
 from os_detection.detectOSNmap import DetectOS
 from os_detection.detectOSScapy import DetectOS as DOS2
 from email_harvester.emailHarvester import harvest_emails, refiner_links
 from port_scan.portScanner import known_ports_scan, all_ports_scan
 from network_scanner.networkScanner import net_scan
+from meta_data_analyzer.pdf_analyzer import pdf_analyze, pdf_analyze_file
 from turbo_flask import Turbo
+import os
+
+UPLOAD_FOLDER = '/home/kpc/PycharmProjects/security-proj-1/uploads'
+ALLOWED_EXTENSIONS = {'pdf'}
 
 
 app = Flask(__name__)
 turbo = Turbo(app)
 app.config.from_object(Config)
+app.config['UPLOAD_PATH'] = UPLOAD_FOLDER
 Bootstrap(app)
 
 
@@ -114,14 +120,19 @@ def harvestlinks():
     return render_template("linkharvester.html", form=form, result=result)
 
 
-@app.route('/pdfanalysis')
+@app.route('/pdfanalysis', methods=['GET','POST'])
 def pdfanalysis():
+    form = OSForm6()
+    pdf_data = None
+    if form.validate_on_submit():
+        file = form.file.data
+        pdf_data = pdf_analyze(os.path.abspath(str(file)))
+    return render_template("pdfanalysis.html", form=form, data=pdf_data)
 
 
-
-# @app.route('/aboutus')
-# def aboutus():
-#     return render_template("aboutus.html")
+@app.route('/aboutus')
+def aboutus():
+    return render_template("aboutus.html")
 
 
 @app.errorhandler(404)

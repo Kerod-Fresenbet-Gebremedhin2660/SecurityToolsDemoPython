@@ -16,4 +16,13 @@ def pdf_analyze(path):
         except IndexError as e:
             return None
 
-print(pdf_analyze("/home/kpc/Documents/dolor.pdf"))
+
+def pdf_analyze_file(file):
+    fp = open(file, 'rb')
+    parser = PDFParser(fp)
+    doc = PDFDocument(parser)
+    try:
+        return doc.info[0]
+    except IndexError as e:
+        return None
+

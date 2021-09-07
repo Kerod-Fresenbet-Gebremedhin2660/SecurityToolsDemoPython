@@ -30,4 +30,4 @@ class OSForm5(FlaskForm):
 
 class OSForm6(FlaskForm):
     file = FileField('Upload PDF')
-    submit = SubmitField('Scan Network')
+    submit = SubmitField('Analyze PDF')

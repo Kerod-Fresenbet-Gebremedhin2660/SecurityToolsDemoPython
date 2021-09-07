@@ -1,3 +1,70 @@
 {% extends "nav-temp.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% block title %}OS FP ICMP{% endblock %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    <br>
+    <div style="margin-right: 30%">
+    <div id="form">
+        <form method="post" action="" class="" autocomplete="off">
+                 {{ form.hidden_tag() }}
+            <div>{{ form.file.label(class="ip-label") }}{{ form.file }}</div>
+            <br>
+            <div>{{ form.submit(class_="btn btn-primary") }}</div>
+        </form>
+    </div>
+    <table class="table" id="result">
+  <thead>
+    <tr>
+      <th scope="col">Creator</th>
+      <th scope="col">Producer</th>
+      <th scope="col">Creation Date</th>
+    </tr>
+  </thead>
+  <tbody>
+        {% if data %}
+            {% for i in data %}
+            <tr>
+            <th>
+                {{ i }}
+            </th>
+            </tr>
+            {% else %}
+                <tr>
+                    <th>
+                        None
+                    </th>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+            <th>
+                None
+            </th>
+            </tr>
+        {% endif %}
+  </tbody>
+</table>
+        <br>
+        <br>
+    </div>
+{% endblock %}
+{% block styles %}
+    {{ super() }}
+    <style>
+    #form{
+        display: block;
+        text-align: center;
+    }
+    form {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+    }
+    </style>
+{% endblock %}
