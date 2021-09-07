@@ -7,7 +7,6 @@ from os_detection.detectOSNmap import DetectOS
 from os_detection.detectOSScapy import DetectOS as DOS2
 from email_harvester.emailHarvester import harvest_emails, refiner_links
 from port_scan.portScanner import known_ports_scan, all_ports_scan
-from port_scan.portScannerASync import known_ports_scan as kps
 from network_scanner.networkScanner import net_scan
 from turbo_flask import Turbo
 
@@ -77,7 +76,7 @@ def spoofer():
     if form.validate_on_submit():
         flash('Processing Your Request')
         ip = form.ip.data
-        result = ping_with_spoofed_address(str(ip))
+        result = ping_with_spoofed_address(str(ip), spoofed_addr=spoofed_ip_address)
     return render_template('spoofer.html', ipr=ip_real, sip=spoofed_ip_address, form=form, result=result)
 
 
@@ -115,9 +114,14 @@ def harvestlinks():
     return render_template("linkharvester.html", form=form, result=result)
 
 
-@app.route('/aboutus')
-def aboutus():
-    return render_template("aboutus.html")
+@app.route('/pdfanalysis')
+def pdfanalysis():
+
+
+
+# @app.route('/aboutus')
+# def aboutus():
+#     return render_template("aboutus.html")
 
 
 @app.errorhandler(404)

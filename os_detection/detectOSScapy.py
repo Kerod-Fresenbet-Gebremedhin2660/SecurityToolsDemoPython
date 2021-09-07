@@ -15,4 +15,3 @@ def DetectOS(ipaddress: str) -> str or None:
             return "windows"
 
 
-print(DetectOS("192.168.0.154"))

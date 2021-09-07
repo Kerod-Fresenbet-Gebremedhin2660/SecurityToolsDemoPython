@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField
+from wtforms import StringField, SubmitField, SelectField, FileField
 from wtforms.validators import DataRequired, IPAddress, URL
 
 
@@ -25,4 +25,9 @@ class OSForm4(FlaskForm):
 
 
 class OSForm5(FlaskForm):
+    submit = SubmitField('Scan Network')
+
+
+class OSForm6(FlaskForm):
+    file = FileField('Upload PDF')
     submit = SubmitField('Scan Network')

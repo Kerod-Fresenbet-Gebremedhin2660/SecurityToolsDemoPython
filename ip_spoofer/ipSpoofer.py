@@ -43,14 +43,10 @@ def get_spoofed_address():
     return str(ip + random.randint(2, 254))
 
 
-def ping_with_spoofed_address(dest_ipaddr):
-    spoofed_addr = get_spoofed_address()
-
-    ethernet = Ether()
-    network = IP(src=spoofed_addr, dst=dest_ipaddr)
-    transport = ICMP()
-    pkt = ethernet / network / transport
-
-    return srloop(pkt, iface=netifaces.interfaces()[-1])
+def ping_with_spoofed_address(dest_ipaddr, spoofed_addr=None):
+    print("The spoofed address sent from the route is: ", spoofed_addr)
+    addr_spoofed = spoofed_addr or get_spoofed_address()
+    network = IP(src=addr_spoofed, dst=dest_ipaddr)
+    return srloop(network, timeout=12)
 
 

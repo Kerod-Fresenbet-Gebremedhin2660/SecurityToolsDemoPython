@@ -1,8 +1,9 @@
+import asyncio
 import socket
 from socket import getservbyport
 
 
-async def all_ports_scan(target, port_range=65535):
+async def all_ports_scan(target="127.0.0.1", port_range=65535):
     ports = dict()
     for port in range(0, port_range):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -21,7 +22,7 @@ async def all_ports_scan(target, port_range=65535):
     return ports
 
 
-async def known_ports_scan(target):
+async def known_ports_scan(target="127.0.0.1"):
     ports = dict()
     for port_num, port in get_known_ports().items():
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -48,3 +49,5 @@ def get_known_ports():
             continue
     return known_ports
 
+
+print(asyncio.run(all_ports_scan()))
