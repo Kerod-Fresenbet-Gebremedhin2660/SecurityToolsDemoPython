@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField, FileField
+from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import DataRequired, IPAddress, URL
+from flask_wtf.file import FileField, FileRequired, FileAllowed
 
 
 class OSForm(FlaskForm):
@@ -29,5 +30,5 @@ class OSForm5(FlaskForm):
 
 
 class OSForm6(FlaskForm):
-    file = FileField('Upload PDF')
+    file = FileField('Upload PDF', validators=[FileRequired(), FileAllowed(['pdf'], 'PDFs only')])
     submit = SubmitField('Analyze PDF')

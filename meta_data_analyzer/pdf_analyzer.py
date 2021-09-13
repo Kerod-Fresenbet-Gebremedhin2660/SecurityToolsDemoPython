@@ -26,3 +26,4 @@ def pdf_analyze_file(file):
     except IndexError as e:
         return None
 
+

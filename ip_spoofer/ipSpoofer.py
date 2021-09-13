@@ -1,11 +1,15 @@
-from scapy.all import *
-from scapy.layers.inet import IP, TCP, ICMP
-import ipaddress, netifaces, random
+import ipaddress
+import netifaces
+from random import randint
 
-def get_ip_address_alt() -> str:
+from scapy.all import *
+from scapy.layers.inet import IP
+
+
+def get_ip_address_alt():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(("8.8.8.8", 80))
-    return s.getsockname()[0]
+    return s.getsockname()[0] or None
 
 
 def get_ip_address():
@@ -38,13 +42,16 @@ def check_ip_address():
 
 def get_spoofed_address():
     ip = ipaddress.ip_address(get_broadcast())
-    return str(ip + random.randint(2, 254))
+    return str(ip + randint(2, 254))
 
 
-def ping_with_spoofed_address(dest_ipaddr, spoofed_addr=None):
-    print("The spoofed address sent from the route is: ", spoofed_addr)
-    addr_spoofed = spoofed_addr or get_spoofed_address()
-    network = IP(src=addr_spoofed, dst=dest_ipaddr)
+def ping_with_spoofed_address(dest_addr=None, spoofed_addr=None):
+    if spoofed_addr is None:
+        addr_spoofed = spoofed_addr
+    else:
+        addr_spoofed = get_spoofed_address()
+    print("The spoofed address sent to the function is: ", addr_spoofed)
+    network = IP(src=addr_spoofed, dst=dest_addr)
     return srloop(network, timeout=12)
 
 

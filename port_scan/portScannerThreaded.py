@@ -28,8 +28,8 @@
 #
 #
 # def threaded_scan():
-#     thread1 = threading.Thread(name="thread1", target=all_ports_scan, args=())
-#     thread2 = threading.Thread(name="thread2")
-#     thread3 = threading.Thread(name="thread3")
-#     thread4 = threading.Thread(name="thread4")
+#     thread1 = threading.Thread(name="thread1", target=all_ports_scan, args=(16000))
+#     thread2 = threading.Thread(name="thread2", target=all_ports_scan, args=(32000))
+#     thread3 = threading.Thread(name="thread3", target=all_ports_scan, args=())
+#     thread4 = threading.Thread(name="thread4", target=all_ports_scan, args=())
 #

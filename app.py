@@ -10,7 +10,8 @@ from port_scan.portScanner import known_ports_scan, all_ports_scan
 from network_scanner.networkScanner import net_scan
 from meta_data_analyzer.pdf_analyzer import pdf_analyze, pdf_analyze_file
 from turbo_flask import Turbo
-import os
+from werkzeug.utils import secure_filename
+import os, pickle
 
 UPLOAD_FOLDER = '/home/kpc/PycharmProjects/security-proj-1/uploads'
 ALLOWED_EXTENSIONS = {'pdf'}
@@ -77,13 +78,17 @@ def portscan():
 def spoofer():
     form = OSForm3()
     result = None
-    ip_real = get_ip_address()
-    spoofed_ip_address = get_spoofed_address()
+    ip_real_spoofed = dict()
+    ip_real_spoofed['ip_real'] = get_ip_address()
+    with open("spoofed_addr.pkl", "wb") as f:
+        pickle.dump(get_spoofed_address(), f)
+    ip_spoofed = pickle.load(open("spoofed_addr.pkl", "rb"))
+    ip_real_spoofed['spoofed_ip_address'] = pickle.load(open("spoofed_addr.pkl", "rb"))
     if form.validate_on_submit():
         flash('Processing Your Request')
         ip = form.ip.data
-        result = ping_with_spoofed_address(str(ip), spoofed_addr=spoofed_ip_address)
-    return render_template('spoofer.html', ipr=ip_real, sip=spoofed_ip_address, form=form, result=result)
+        result = ping_with_spoofed_address(dest_addr=str(ip), spoofed_addr=ip_real_spoofed['spoofed_ip_address'])
+    return render_template('spoofer.html', ipr=ip_real_spoofed['ip_real'], sip=ip_real_spoofed['spoofed_ip_address'], form=form, result=result)
 
 
 @app.route('/networkscan', methods=['GET', 'POST'])
@@ -126,7 +131,13 @@ def pdfanalysis():
     pdf_data = None
     if form.validate_on_submit():
         file = form.file.data
-        pdf_data = pdf_analyze(os.path.abspath(str(file)))
+        print(file)
+        file_name = secure_filename(file)
+        file.save(os.path.join(
+            app.instance_path, 'uploads', file_name
+        ))
+        pdf_data = pdf_analyze_file(os.path.abspath(file))
+        print("PDF Data: ",pdf_data)
     return render_template("pdfanalysis.html", form=form, data=pdf_data)
 
 

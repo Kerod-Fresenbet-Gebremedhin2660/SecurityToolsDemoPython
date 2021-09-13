@@ -182,7 +182,6 @@ class PyHex(Window):
         self.decoded_text_x = int
         self.decoded_text_y = 2
 
-
         # The File
         self.filename = sys.argv[1]
         # self.filename = "base.py"
@@ -420,7 +419,7 @@ class PyHex(Window):
             y_coord += 1
 
     def _draw_status_bar(self):
-        self.draw_text(self.last_line + 1, 0, " "*(self.width-1), self.status_bar_color)
+        self.draw_text(self.last_line + 1, 0, " " * (self.width - 1), self.status_bar_color)
         self.draw_text(self.last_line + 1, 0, self.get_status_bar_text(), self.status_bar_color)
 
     def scroll_horizontally(self, direction):
@@ -581,6 +580,7 @@ class PyHex(Window):
         self.changed = False
         self.save_dialog = False
         self.exit()
+
 
 if __name__ == '__main__':
     app: Application = Application()
