@@ -45,13 +45,7 @@ def get_spoofed_address():
     return str(ip + randint(2, 254))
 
 
-def ping_with_spoofed_address(dest_addr=None, spoofed_addr=None):
-    if spoofed_addr is None:
-        addr_spoofed = spoofed_addr
-    else:
-        addr_spoofed = get_spoofed_address()
-    print("The spoofed address sent to the function is: ", addr_spoofed)
-    network = IP(src=addr_spoofed, dst=dest_addr)
+def ping_with_spoofed_address(dest_addr, spoofed_addr):
+    print("The spoofed address sent to the function is: ", spoofed_addr)
+    network = IP(src=spoofed_addr, dst=dest_addr)
     return srloop(network, timeout=12)
-
-

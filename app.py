@@ -25,7 +25,6 @@ def index():
     form = OSFPForm()
     osinfo = None
     if form.validate_on_submit():
-        flash('Processing Your Request')
         ip = form.ip.data
         osinfo = DetectOS(ip)
     return render_template("index.html", form=form, osinfo=osinfo)
@@ -36,7 +35,7 @@ def scapy():
     form = OSFPForm()
     osname = None
     if form.validate_on_submit():
-        flash('Processing Your Request')
+
         ip = form.ip.data
         osname = DOS2(ip)
         if osname is None:
@@ -50,7 +49,7 @@ def portscan():
     form = PortScannerForm()
     result = None
     if form.validate_on_submit():
-        flash('Processing Your Request')
+
         ip = form.ip.data
         scan_type = int(form.scanType.data)
         if scan_type == 1:
@@ -71,17 +70,23 @@ def portscan():
 def spoofer():
     form = SpooferForm()
     result = None
-    ip_real_spoofed = dict()
-    ip_real_spoofed['ip_real'] = get_ip_address()
+    ip_dict = dict()
+    ip_dict['ip_real'] = get_ip_address()
+
     with open("spoofed_addr.pkl", "wb") as f:
         pickle.dump(get_spoofed_address(), f)
-    ip_real_spoofed['spoofed_ip_address'] = pickle.load(open("spoofed_addr.pkl", "rb"))
+
+    ip_dict['spoofed_ip_address'] = pickle.load(open("spoofed_addr.pkl", "rb"))
+
+    spoofed_net_addr: str = ip_dict['spoofed_ip_address']
+    spoofed_net_addr = spoofed_net_addr[0:10]
+
     if form.validate_on_submit():
-        flash('Processing Your Request')
         ip = form.ip.data
-        result = ping_with_spoofed_address(dest_addr=str(ip), spoofed_addr=ip_real_spoofed['spoofed_ip_address'])
-    return render_template('spoofer.html', ipr=ip_real_spoofed['ip_real'], sip=ip_real_spoofed['spoofed_ip_address'],
-                           form=form, result=result)
+        print("The spoofed ip inside the view function: ", ip_dict['spoofed_ip_address'])
+        result = ping_with_spoofed_address(dest_addr=str(ip), spoofed_addr=ip_dict['spoofed_ip_address'])
+    return render_template('spoofer.html', ipr=ip_dict['ip_real'], sip=ip_dict['spoofed_ip_address'],
+                           form=form, spoofed_net_addr=spoofed_net_addr, result=result)
 
 
 @app.route('/networkscan', methods=['GET', 'POST'])
@@ -98,12 +103,12 @@ def harvestemails():
     form = HarvestingForm()
     result = None
     if form.validate_on_submit():
-        flash('Processing Your Request')
+
         url = form.url.data
         result = harvest_emails(url)
         if len(result) == 0:
             result = None
-            flash('Connection Error Most Likely, No Results could be fetched')
+
     return render_template("emailharvester.html", form=form, result=result)
 
 
@@ -112,7 +117,6 @@ def harvestlinks():
     form = HarvestingForm()
     result = None
     if form.validate_on_submit():
-        flash('Processing Your Request')
         url = form.url.data
         result = refiner_links(url)
     return render_template("linkharvester.html", form=form, result=result)

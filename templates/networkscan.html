@@ -2,83 +2,99 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block title %}Net Scan{% endblock %}
 {% block content %}
-        <div id="form" style="margin-right: 30%;">
+    <div id="form" style="margin-right: 30%;">
         <form method="post" action="" class="" autocomplete="off">
-                 {{ form.hidden_tag() }}
+            {{ form.hidden_tag() }}
             <br>
             <br>
             <br>
             <br>
             <div>{{ form.submit(class_="btn btn-primary") }}</div>
         </form>
-  <table class="table" id="result">
-  <thead>
-    <tr>
-      <th scope="col">Host</th>
-      <th scope="col">Status</th>
-    </tr>
-  </thead>
-  <tbody>
-        {% if result %}
-            {% for i, j in result.items() %}
-                <tr>
-                <th>
-                    {{ i }}
-                </th>
-                {% if j %}
-                <th id="green">
-                    Up
-                </th>
-                {% else %}
-                <th id="red">
-                    Down
-                </th>
-                {% endif %}
-                </tr>
-            {% endfor %}
-        {% else %}
+        <table class="table" id="result">
+            <thead>
+            <tr>
+                <th scope="col">Host</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if result %}
+                {% for i, j in result.items() %}
+                    <tr>
+                        <th>
+                            {{ i }}
+                        </th>
+                        {% if j %}
+                            <th id="green">
+                                Up
+                            </th>
+                        {% else %}
+                            <th id="red">
+                                Down
+                            </th>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% else %}
 
-        {% endif %}
-  </tbody>
-</table>
-
+            {% endif %}
+            </tbody>
+        </table>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
     </div>
 {% endblock %}
 {% block styles %}
     {{ super() }}
     <style>
-    #form{
-        display: block;
-        text-align: center;
-    }
-    form {
-        display: inline-block;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: left;
-    }
-    #green{
-        color: green;
-    }
-    #red{
-        color: red;
-    }
-    .loader {
-      border: 10px solid #f3f3f3; /* Light grey */
-      border-top: 10px solid #3498db; /* Blue */
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 2s linear infinite;
-        display: inline-block;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: left;
-    }
+        #form {
+            display: block;
+            text-align: center;
+        }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+        form {
+            display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+
+        #green {
+            color: green;
+        }
+
+        #red {
+            color: red;
+        }
+
+        .loader {
+            border: 10px solid #f3f3f3; /* Light grey */
+            border-top: 10px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 {% endblock %}

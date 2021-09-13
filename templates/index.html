@@ -5,57 +5,86 @@
 {% block content %}
     <br>
     <div style="margin-right: 30%">
-    <div id="form">
-        <form method="post" action="" class="" autocomplete="off">
-                 {{ form.hidden_tag() }}
-            <div>{{ form.ip.label(class="ip-label") }}{{ form.ip }}</div>
-            <br>
-            <div>{{ form.submit(class_="btn btn-primary") }}</div>
-        </form>
-    </div>
+        <div id="form">
+            <form method="post" action="" class="" autocomplete="off">
+                {{ form.hidden_tag() }}
+                <div>{{ form.ip.label(class="ip-label") }}{{ form.ip }}</div>
+                <br>
+                <div>{{ form.submit(class_="btn btn-primary") }}</div>
+            </form>
+        </div>
 
-    <table class="table" id="result">
-    <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Vendor</th>
-      <th scope="col">OS Family</th>
-      <th scope="col">OS Generation</th>
-      <th scope="col">Accuracy of Detection</th>
-      <th scope="col">CPE</th>
-      <th scope="col">Bool</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        {% if osinfo %}
-            {% for i, j in osinfo.items() %}
-                <th>
-                    {{ j }}
-                </th>
-            {% else %}
-                <th>Could not Identify OS</th>
-            {% endfor %}
-        {% else %}
-        {% endif %}
-    </tr>
-    </tbody>
-    </table>
-</div>
+        <table class="table" id="result">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Vendor</th>
+                <th scope="col">OS Family</th>
+                <th scope="col">OS Generation</th>
+                <th scope="col">Accuracy of Detection</th>
+                <th scope="col">CPE</th>
+                <th scope="col">Bool</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                {% if osinfo %}
+                    {% for i, j in osinfo.items() %}
+                        <th>
+                            {{ j }}
+                        </th>
+                    {% else %}
+                        <th>Could not Identify OS</th>
+                    {% endfor %}
+                {% else %}
+                {% endif %}
+            </tr>
+            </tbody>
+        </table>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div id="flash_messages_container">
+                    <ul class=flashes id="flash_messages">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
 {% endblock %}
 {% block styles %}
     {{ super() }}
     <style>
-    #form{
-        display: block;
-        text-align: center;
-    }
-    form {
-        display: inline-block;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: left;
-    }
+        #form {
+            display: block;
+            text-align: center;
+        }
+
+        form {
+            display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+
+        #flash_messages {
+            border-radius: 10px;
+            padding: 10px;
+            color: white;
+            background-color: #68889E;
+            list-style: none;
+        }
+
+        #flash_messages_container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
+{% endblock %}
+{% block scripts %}
+
 {% endblock %}
