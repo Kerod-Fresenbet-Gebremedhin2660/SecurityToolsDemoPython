@@ -1,0 +1,55 @@
+{% extends "nav-temp.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Email Harvester{% endblock %}
+{% block content %}
+    <br>
+    <div style="margin-right: 30%">
+    <div id="form">
+        <form method="post" action="" class="" autocomplete="off">
+                 {{ form.hidden_tag() }}
+            <div>{{ form.url.label(class="ip-label") }}{{ form.url }}</div>
+            <br>
+            <div>{{ form.submit(class_="btn btn-primary") }}</div>
+        </form>
+    </div>
+        <table class="table" id="result">
+    <thead>
+    <tr>
+      <th scope="col">Emails</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% if result %}
+            {% for i in result %}
+            <tr>
+                <th>
+                    {{ i }}
+                </th>
+            </tr>
+            {% endfor %}
+    </tbody>
+    </table>
+    {% else %}
+    <div id="form">
+        <div>
+            No Emails Could be harvested.
+        </div>
+    </div>
+    {% endif %}
+    </div>
+{% endblock %}
+{% block styles %}
+    {{ super() }}
+    <style>
+    #form{
+        display: block;
+        text-align: center;
+    }
+    form {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+    }
+    </style>
+{% endblock %}

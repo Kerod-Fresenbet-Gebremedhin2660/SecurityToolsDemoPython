@@ -1,0 +1,61 @@
+{% extends "nav-temp.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}OS FP TCP{% endblock %}
+
+{% block content %}
+    <br>
+    <div style="margin-right: 30%">
+    <div id="form">
+        <form method="post" action="" class="" autocomplete="off">
+                 {{ form.hidden_tag() }}
+            <div>{{ form.ip.label(class="ip-label") }}{{ form.ip }}</div>
+            <br>
+            <div>{{ form.submit(class_="btn btn-primary") }}</div>
+        </form>
+    </div>
+
+    <table class="table" id="result">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Vendor</th>
+      <th scope="col">OS Family</th>
+      <th scope="col">OS Generation</th>
+      <th scope="col">Accuracy of Detection</th>
+      <th scope="col">CPE</th>
+      <th scope="col">Bool</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        {% if osinfo %}
+            {% for i, j in osinfo.items() %}
+                <th>
+                    {{ j }}
+                </th>
+            {% else %}
+                <th>Could not Identify OS</th>
+            {% endfor %}
+        {% else %}
+        {% endif %}
+    </tr>
+    </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block styles %}
+    {{ super() }}
+    <style>
+    #form{
+        display: block;
+        text-align: center;
+    }
+    form {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+    }
+    </style>
+{% endblock %}

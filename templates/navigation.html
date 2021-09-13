@@ -1,0 +1,35 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}NMAP{% endblock %}
+{% block head %}
+    {{ super() }}
+        <link rel="icon" type="image/ico" sizes="32x32" href="../static/favicon/favicon-32x32.png">
+{% endblock %}
+{% block navbar %}
+<div class="navbar-inverse" id="nav" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle"
+             data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">OS FP TCP/IP</a></li>
+                <li><a href="/icmp">OS FP ICMP</a></li>
+                <li><a href="/portscan">Port Scan</a></li>
+                <li><a href="/spoofer">Spoofer Tool</a></li>
+                <li><a href="/networkscan">Network Scan</a></li>
+                <li><a href="/emailharvester">Harvest Emails</a></li>
+                <li><a href="/linkharvester">Harvest Links</a></li>
+                <li><a href="/pdfanalysis">PDF Analyzer</a></li>
+                <li><a href="/aboutus">About Us</a> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

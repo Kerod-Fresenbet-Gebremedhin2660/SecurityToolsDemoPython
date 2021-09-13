@@ -1,0 +1,32 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}NMAP{% endblock %}
+{% block head %}
+    {{ super() }}
+        <link rel="icon" type="image/ico" sizes="32x32" href="../static/favicon/favicon-32x32.png">
+{% endblock %}
+{% block navbar %}
+        <div id="wrapper" class="toggled">
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">
+                <li><a href="/">OS FingerPrinter TCP/IP</a></li>
+                <li><a href="/icmp">OS FingerPrinter ICMP</a></li>
+                <li><a href="/portscan">Port Scan</a></li>
+                <li><a href="/spoofer">Spoofer</a></li>
+                <li><a href="/networkscan">Network Scan</a></li>
+                <li><a href="/emailharvester">Harvest Emails</a></li>
+                <li><a href="/linkharvester">Harvest Links</a></li>
+                <li><a href="/pdfanalysis">PDF Analyzer</a></li>
+                <li><a href="/aboutus">About Us</a> </li>
+                </ul>
+            </div>
+        </div>
+{% endblock %}
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('.static', filename='nav.css') }}">
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('.static', filename='nav.js') }}"></script>
+{% endblock %}
