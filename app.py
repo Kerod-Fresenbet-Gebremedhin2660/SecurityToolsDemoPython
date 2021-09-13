@@ -1,32 +1,28 @@
-from flask import Flask, render_template, flash, make_response, request, redirect
+import os
+import pickle
+
+from flask import Flask, render_template, flash, make_response
 from flask_bootstrap import Bootstrap
 from config import Config
-from forms import OSForm, OSForm2, OSForm3, OSForm4, OSForm5, OSForm6
+from email_harvester.emailHarvester import harvest_emails, refiner_links
+from forms import OSFPForm, PortScannerForm, SpooferForm, HarvestingForm, NetworkScanForm, FileUploadForm
 from ip_spoofer.ipSpoofer import get_spoofed_address, get_ip_address, ping_with_spoofed_address
+from meta_data_analyzer.pdf_analyzer import pdf_analyze_file
+from meta_data_analyzer.image_analyzer import image_analyzer
+from network_scanner.networkScanner import net_scan
 from os_detection.detectOSNmap import DetectOS
 from os_detection.detectOSScapy import DetectOS as DOS2
-from email_harvester.emailHarvester import harvest_emails, refiner_links
 from port_scan.portScanner import known_ports_scan, all_ports_scan
-from network_scanner.networkScanner import net_scan
-from meta_data_analyzer.pdf_analyzer import pdf_analyze, pdf_analyze_file
-from turbo_flask import Turbo
 from werkzeug.utils import secure_filename
-import os, pickle
-
-UPLOAD_FOLDER = '/home/kpc/PycharmProjects/security-proj-1/uploads'
-ALLOWED_EXTENSIONS = {'pdf'}
-
 
 app = Flask(__name__)
-turbo = Turbo(app)
 app.config.from_object(Config)
-app.config['UPLOAD_PATH'] = UPLOAD_FOLDER
 Bootstrap(app)
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    form = OSForm()
+    form = OSFPForm()
     osinfo = None
     if form.validate_on_submit():
         flash('Processing Your Request')
@@ -37,7 +33,7 @@ def index():
 
 @app.route('/icmp', methods=['GET', 'POST'])
 def scapy():
-    form = OSForm()
+    form = OSFPForm()
     osname = None
     if form.validate_on_submit():
         flash('Processing Your Request')
@@ -51,7 +47,7 @@ def scapy():
 
 @app.route('/portscan', methods=['GET', 'POST'])
 def portscan():
-    form = OSForm2()
+    form = PortScannerForm()
     result = None
     if form.validate_on_submit():
         flash('Processing Your Request')
@@ -68,32 +64,29 @@ def portscan():
                 result = all_ports_scan(str(ip))
             else:
                 result = all_ports_scan()
-        if turbo.can_stream():
-            turbo.append(render_template('portscan.html', form=form, result=result))
-
     return render_template("portscan.html", form=form, result=result)
 
 
 @app.route('/spoofer', methods=['GET', 'POST'])
 def spoofer():
-    form = OSForm3()
+    form = SpooferForm()
     result = None
     ip_real_spoofed = dict()
     ip_real_spoofed['ip_real'] = get_ip_address()
     with open("spoofed_addr.pkl", "wb") as f:
         pickle.dump(get_spoofed_address(), f)
-    ip_spoofed = pickle.load(open("spoofed_addr.pkl", "rb"))
     ip_real_spoofed['spoofed_ip_address'] = pickle.load(open("spoofed_addr.pkl", "rb"))
     if form.validate_on_submit():
         flash('Processing Your Request')
         ip = form.ip.data
         result = ping_with_spoofed_address(dest_addr=str(ip), spoofed_addr=ip_real_spoofed['spoofed_ip_address'])
-    return render_template('spoofer.html', ipr=ip_real_spoofed['ip_real'], sip=ip_real_spoofed['spoofed_ip_address'], form=form, result=result)
+    return render_template('spoofer.html', ipr=ip_real_spoofed['ip_real'], sip=ip_real_spoofed['spoofed_ip_address'],
+                           form=form, result=result)
 
 
 @app.route('/networkscan', methods=['GET', 'POST'])
 def netscan():
-    form = OSForm5()
+    form = NetworkScanForm()
     result = None
     if form.validate_on_submit():
         result = net_scan()
@@ -102,7 +95,7 @@ def netscan():
 
 @app.route('/emailharvester', methods=['GET', 'POST'])
 def harvestemails():
-    form = OSForm4()
+    form = HarvestingForm()
     result = None
     if form.validate_on_submit():
         flash('Processing Your Request')
@@ -116,7 +109,7 @@ def harvestemails():
 
 @app.route('/linkharvester', methods=['GET', 'POST'])
 def harvestlinks():
-    form = OSForm4()
+    form = HarvestingForm()
     result = None
     if form.validate_on_submit():
         flash('Processing Your Request')
@@ -125,20 +118,32 @@ def harvestlinks():
     return render_template("linkharvester.html", form=form, result=result)
 
 
-@app.route('/pdfanalysis', methods=['GET','POST'])
+@app.route('/pdfanalysis', methods=['GET', 'POST'])
 def pdfanalysis():
-    form = OSForm6()
+    form = FileUploadForm()
     pdf_data = None
     if form.validate_on_submit():
         file = form.file.data
-        print(file)
-        file_name = secure_filename(file)
+        file_name = secure_filename(file.filename)
         file.save(os.path.join(
-            app.instance_path, 'uploads', file_name
+            app.root_path, 'uploads/', file_name
         ))
-        pdf_data = pdf_analyze_file(os.path.abspath(file))
-        print("PDF Data: ",pdf_data)
+        pdf_data = pdf_analyze_file('uploads/' + file_name)
     return render_template("pdfanalysis.html", form=form, data=pdf_data)
+
+
+@app.route('/imageanalysis', methods=['GET', 'POST'])
+def imageanalysis():
+    form = FileUploadForm()
+    image_data = None
+    if form.validate_on_submit():
+        file = form.file.data
+        file_name = secure_filename(file.filename)
+        file.save(os.path.join(
+            app.root_path, 'imageuploads/', file_name
+        ))
+        image_data = image_analyzer(app.root_path + '/imageuploads/' + file_name)
+    return render_template("pdfanalysis.html", form=form, data=image_data)
 
 
 @app.route('/aboutus')

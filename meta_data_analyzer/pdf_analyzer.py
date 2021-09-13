@@ -13,7 +13,7 @@ def pdf_analyze(path):
         doc = PDFDocument(parser)
         try:
             return doc.info[0]
-        except IndexError as e:
+        except IndexError:
             return None
 
 
@@ -23,7 +23,5 @@ def pdf_analyze_file(file):
     doc = PDFDocument(parser)
     try:
         return doc.info[0]
-    except IndexError as e:
+    except IndexError:
         return None
-
-

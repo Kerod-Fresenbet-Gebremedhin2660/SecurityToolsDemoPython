@@ -1,4 +1,4 @@
-{% extends "navigation.html" %}
+{% extends "nav-side.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% block title %}NOT FOUND ERROR{% endblock %}
 
@@ -6,7 +6,7 @@
 {% block content %}
     <div style="font-weight: bold; font-size: xx-large" class="father">
         <div class="child">
-        NOT FOUND 404
+            <a href="/" style="text-decoration: none">NOT FOUND 404</a>
 
         </div>
     </div>
@@ -14,16 +14,17 @@
 {% block styles %}
     {{ super() }}
     <style>
-    .father {
-    line-height: 300px;
-    text-align: center;
-}
-.child {
-    display: inline-block;
-    vertical-align: middle;
-    line-height: initial;
-    text-align: left;
-}
+        .father {
+            line-height: 300px;
+            text-align: center;
+        }
+
+        .child {
+            display: inline-block;
+            vertical-align: middle;
+            line-height: initial;
+            text-align: left;
+        }
 
     </style>
 {% endblock %}

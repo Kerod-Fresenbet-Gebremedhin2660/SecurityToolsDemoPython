@@ -1,34 +1,36 @@
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import DataRequired, IPAddress, URL
 from flask_wtf.file import FileField, FileRequired, FileAllowed
+from flask_uploads import UploadSet, DOCUMENTS
 
 
-class OSForm(FlaskForm):
+class OSFPForm(FlaskForm):
     ip = StringField("IP Address :   ", validators=[DataRequired(), IPAddress()])
     submit = SubmitField('Detect OS')
 
 
-class OSForm2(FlaskForm):
+class PortScannerForm(FlaskForm):
     ip = StringField("IP Address : ", validators=[IPAddress()])
     scanType = SelectField(label="Type of Scan : ", choices=[(1, 'Known Ports'), (2, 'All Ports')])
     submit = SubmitField('Scan Ports')
 
 
-class OSForm3(FlaskForm):
+class SpooferForm(FlaskForm):
     ip = StringField("Destination IP Address :   ", validators=[DataRequired(), IPAddress()])
     submit = SubmitField('Send Spoofed Packet')
 
 
-class OSForm4(FlaskForm):
+class HarvestingForm(FlaskForm):
     url = StringField("URL : ", validators=[DataRequired(), URL()])
     submit = SubmitField('Harvest')
 
 
-class OSForm5(FlaskForm):
+class NetworkScanForm(FlaskForm):
     submit = SubmitField('Scan Network')
 
 
-class OSForm6(FlaskForm):
-    file = FileField('Upload PDF', validators=[FileRequired(), FileAllowed(['pdf'], 'PDFs only')])
-    submit = SubmitField('Analyze PDF')
+class FileUploadForm(FlaskForm):
+    file = FileField('Upload PDF',
+                     validators=[FileRequired(), FileAllowed(['pdf', 'png', 'jpg', 'jpeg'], 'PDF\'s or Images only')])
+    submit = SubmitField('Analyze')
